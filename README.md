@@ -1,8 +1,8 @@
 # DMarket API documentation
 
-{% api-method method="get" host="https://api.cakes.com" path="/account/v1/user/balance" %}
+{% api-method method="get" host="https://dmarket.com" path="/account/v1/user/balance" %}
 {% api-method-summary %}
-Get Cakes
+Get Account Balance
 {% endapi-method-summary %}
 
 {% api-method-description %}
