@@ -1,0 +1,7844 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "description": "Resource for managing tradings",
+  "title": "Dmarket trading",
+  "license": {
+   "name": "MIT",
+   "url": "http://mit.org"
+  },
+  "version": "1.0.0"
+ },
+ "host": "dmarket.com",
+ "paths": {
+  "/account/v1/user/balance": {
+   "get": {
+    "consumes": [
+     "application/json",
+     "multipart/form-data"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Account"
+    ],
+    "summary": "Returns user's balance by it's token.",
+    "operationId": "getUserBalanceByTokenHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserBalance"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserBalance"
+      }
+     }
+    }
+   }
+  },
+  "/game/v1/games": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Games"
+    ],
+    "summary": "Returns list of all available games.",
+    "operationId": "getAllGamesHandler",
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.GamesRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.GamesRepresentation"
+      }
+     }
+    }
+   }
+  },
+  "/offers-search/v1/aggregated-class/{classId}/sell-offers": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Get active offers info by classID",
+    "operationId": "GetOffersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Class identifier (with slug support) can be found in /offers-search/v1/search endpoint",
+      "name": "classId",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "number",
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "USD|DMC",
+      "name": "currency",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "price",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "asc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "active",
+      "description": "status",
+      "name": "status",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "all",
+      "description": "tradable|non-tradable|all",
+      "name": "tradability",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.SellOffersListResponse"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.SellOffersListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers-search/v1/search": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Search aggregated active offers by gameID",
+    "operationId": "FilterAggregatedClassesHandler",
+    "deprecated": true,
+    "parameters": [
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "updated",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "category",
+      "name": "category",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "title",
+      "name": "title",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "filter",
+      "name": "filter",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "default": 1,
+      "description": "minimal offer count in agg classes",
+      "name": "minOfferCount",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "enable if want get all offers without existing exteriors filter",
+      "name": "notPainted",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "gameId",
+      "name": "gameId",
+      "in": "query",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "currency",
+      "name": "currency",
+      "in": "query",
+      "required": true
+     },
+     {
+      "type": "integer",
+      "default": 0,
+      "description": "priceFrom",
+      "name": "priceFrom",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "default": 1000000,
+      "description": "priceTo",
+      "name": "priceTo",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AggregatedClassesListResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AggregatedClassesListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers-search/v1/search/available-items": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Search aggregated active offers by title",
+    "operationId": "AvailableItemsHandler",
+    "deprecated": true,
+    "parameters": [
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "updated",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "title",
+      "name": "title",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AvailableItemsResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AvailableItemsResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers-search/v1/user/sell-offers": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Get your active sell offers",
+    "operationId": "GetSellOffersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "format": "active,closed",
+      "description": "status separated by comma",
+      "name": "status",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "created",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Game ID",
+      "name": "gameId",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Filter",
+      "name": "q",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserSellOffersListResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserSellOffersListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers/v1/search": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Search aggregated active offers by gameID",
+    "operationId": "FilterAggregatedClassesHandler",
+    "parameters": [
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "updated",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "category",
+      "name": "category",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "title",
+      "name": "title",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "filter",
+      "name": "filter",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "default": 1,
+      "description": "minimal offer count in agg classes",
+      "name": "minOfferCount",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "enable if want get all offers without existing exteriors filter",
+      "name": "notPainted",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "gameId",
+      "name": "gameId",
+      "in": "query",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "USD|DMC",
+      "name": "currency",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "default": 0,
+      "description": "priceFrom",
+      "name": "priceFrom",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "default": 1000000,
+      "description": "priceTo",
+      "name": "priceTo",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AggregatedClassesListResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AggregatedClassesListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers/v1/search/aggregated-class/{classId}/sell-offers": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Get active offers info by classID",
+    "operationId": "GetOffersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Class identifier (with slug support) can be found in /offers/v1/search endpoint",
+      "name": "classId",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "number",
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "currency",
+      "name": "currency",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "price",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "asc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "active",
+      "description": "status",
+      "name": "status",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "all",
+      "description": "tradable|non-tradable|all",
+      "name": "tradability",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.SellOffersListResponse"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.SellOffersListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers/v1/search/available-items": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Search aggregated active offers by title",
+    "operationId": "AvailableItemsHandler",
+    "parameters": [
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "updated",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "title",
+      "name": "title",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AvailableItemsResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.AvailableItemsResponse"
+      }
+     }
+    }
+   }
+  },
+  "/offers/v1/search/user/sell-offers": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Search"
+    ],
+    "summary": "Get your active sell offers",
+    "operationId": "GetSellOffersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "number",
+      "default": 50,
+      "description": "limit",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "description": "offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "format": "active,closed",
+      "description": "status separated by comma",
+      "name": "status",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "created",
+      "description": "orderBy",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "desc",
+      "description": "orderDir",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Game ID",
+      "name": "gameId",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Filter",
+      "name": "q",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserSellOffersListResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "description": "Not found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.UserSellOffersListResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/buy/offers": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Buy sell offers from DMarket",
+    "operationId": "buyOffersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.BuyOffersTradingRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.BuyOffersTradingResponse"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.BuyOffersTradingResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/export": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Withdraw items from your DMarket account. Items will be sent to the specified trade url in your account settings on DMarket",
+    "operationId": "exportItemHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.ExportItemRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportItemResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportItemResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/export/operation/{OperationID}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Find exported item operation details by operation ID",
+    "operationId": "getExportOperation",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "string",
+      "description": "Export operation ID",
+      "name": "OperationID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportItemResponse"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportItemResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/import": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Import one or more Steam items into DMarket inventory, this operation will return a unique operation ID to track trade status",
+    "operationId": "createImportOperationHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.ImportItemsRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/import/operation/{OperationID}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Allows you to find details of the imported item operation by unique ID",
+    "operationId": "getImportOperation",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "string",
+      "description": "Import operation ID",
+      "name": "OperationID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationResponse"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/inventory": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Returns items are located on DMarket",
+    "operationId": "userInventoryHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "integer",
+      "default": 50,
+      "description": "Limit of list.",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "integer",
+      "description": "Offset of list.",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "title",
+      "description": "Sorting field",
+      "name": "orderBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "asc",
+      "description": "asc|desc",
+      "name": "orderDir",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Game ID",
+      "name": "gameId",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Custom filter to filter inventory by item name",
+      "name": "q",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.WithdrawResponse"
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/representation.WithdrawResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/offers/cancel": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Cancel one or more sell offers from the DMarket marketplace",
+    "operationId": "cancelOfferHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.CancelOfferTradingRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/offers/update-price": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Update one or more sell offers prices",
+    "operationId": "changeOfferPriceHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.UpdateOffersTradingRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/orders/change-price": {
+   "put": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Change price for existing buy order",
+    "operationId": "changeOrderPrice",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.ChangeTradeOrderPriceRequest"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No content"
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/orders/create": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Create new buy order",
+    "operationId": "createPurchaseOrder",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.CreateTradeOrderRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "No content",
+      "schema": {
+       "$ref": "#/definitions/representation.CreateOrderTradingResponse"
+      }
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "description": "No content",
+      "schema": {
+       "$ref": "#/definitions/representation.CreateOrderTradingResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/orders/get-orders": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "get orders by filter",
+    "operationId": "getAllOrdersHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "date",
+      "description": "Sort data by status|price|title|date fields",
+      "name": "sortBy",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": "asc",
+      "description": "asc|desc",
+      "name": "direction",
+      "in": "query"
+     },
+     {
+      "type": "boolean",
+      "description": "Show active orders",
+      "name": "active",
+      "in": "query"
+     },
+     {
+      "type": "boolean",
+      "description": "Show completed orders",
+      "name": "completed",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "Limit items on page",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "number",
+      "default": 0,
+      "description": "Skip items",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No content"
+     },
+     "400": {
+      "description": "Bad request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/orders/remove": {
+   "delete": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Remove buy order for user",
+    "operationId": "deleteOrder",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.RemoveOrderRequest"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No content"
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/report/accounting/balance": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Get user balance operations analytics by period of time. Deposits and withdraws",
+    "operationId": "getAccountingBalance",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/report/accounting/offers": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Get user offers report about sell and buy offers by period of time",
+    "operationId": "getAccountingOffers",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.AccountingReportResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/report/export-operations": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Get user export operation report with limit/offset pagination",
+    "operationId": "getExportOperationsReport",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.ExportOperationsReportRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportOperationsReportResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ExportOperationsReportResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/report/import-operations": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Get user import operation report with limit/offset pagination",
+    "operationId": "getImportOperationsReport",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationsReportRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationsReportResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.ImportOperationsReportResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/sell-offer": {
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Put up for sale set of imported assets, this operation will return a unique sell offer ID for each asset",
+    "operationId": "createOfferHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/representation.CreateOffersTradingRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     },
+     "400": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "409": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     }
+    }
+   }
+  },
+  "/trading/v1/sell-offer/{SellOfferID}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "Trading"
+    ],
+    "summary": "Get sell offer details by ID",
+    "operationId": "getOfferHandler",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "Authorization token.",
+      "name": "Authorization",
+      "in": "header"
+     },
+     {
+      "type": "string",
+      "description": "Sell offer ID",
+      "name": "SellOfferID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     },
+     "401": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "404": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "500": {
+      "schema": {
+       "$ref": "#/definitions/api.ErrorRepresentation"
+      }
+     },
+     "default": {
+      "schema": {
+       "$ref": "#/definitions/representation.OffersTradingResponse"
+      }
+     }
+    }
+   }
+  }
+ },
+ "definitions": {
+  "api.ErrorRepresentation": {
+   "required": [
+    "message",
+    "code"
+   ],
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "validationDetails": {
+     "$ref": "#/definitions/api.ErrorRepresentation.validationDetails"
+    }
+   }
+  },
+  "api.ErrorRepresentation.validationDetails": {},
+  "autobots_model.TradeChange": {
+   "required": [
+    "from",
+    "to",
+    "date",
+    "by"
+   ],
+   "properties": {
+    "by": {
+     "type": "string"
+    },
+    "date": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "from": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "to": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "autobots_model.TradeItem": {
+   "required": [
+    "appid",
+    "assetid",
+    "contextid",
+    "classid",
+    "instanceid"
+   ],
+   "properties": {
+    "appid": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "assetid": {
+     "type": "string"
+    },
+    "classid": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "contextid": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "instanceid": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "autobots_model.TradeLastError": {
+   "required": [
+    "message",
+    "code"
+   ],
+   "properties": {
+    "code": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "autobots_model.TradeResponse": {
+   "required": [
+    "message",
+    "code",
+    "type"
+   ],
+   "properties": {
+    "code": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "autobots_model.TradeSteamError": {
+   "required": [
+    "message",
+    "code"
+   ],
+   "properties": {
+    "code": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.AccountSettings": {
+   "properties": {
+    "enabledDeviceConfirmation": {
+     "type": "boolean"
+    },
+    "isSubscribedToNewsletters": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.AccountStatistics": {
+   "required": [
+    "userExperience",
+    "accountValueDMC",
+    "accountValueTime",
+    "favouriteGames",
+    "valuableItems",
+    "turnover",
+    "totalSold",
+    "totalBought",
+    "topItemsSold",
+    "topItemsBought"
+   ],
+   "properties": {
+    "accountValueDMC": {
+     "type": "string"
+    },
+    "accountValueTime": {
+     "type": "string"
+    },
+    "favouriteGames": {
+     "$ref": "#/definitions/representation.FavouriteGames"
+    },
+    "topItemsBought": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ItemSoldBought"
+     }
+    },
+    "topItemsSold": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ItemSoldBought"
+     }
+    },
+    "totalBought": {
+     "$ref": "#/definitions/representation.CountValuePair"
+    },
+    "totalSold": {
+     "$ref": "#/definitions/representation.CountValuePair"
+    },
+    "turnover": {
+     "$ref": "#/definitions/representation.CountValuePair"
+    },
+    "userExperience": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "valuableItems": {
+     "$ref": "#/definitions/representation.ValuableItems"
+    }
+   }
+  },
+  "representation.AccountingReportItem": {
+   "required": [
+    "ID",
+    "Amount",
+    "OperationType",
+    "Date"
+   ],
+   "properties": {
+    "Amount": {
+     "description": "Amount and currency",
+     "$ref": "#/definitions/representation.TradingMoney"
+    },
+    "Date": {
+     "description": "Date in timestamp",
+     "type": "integer",
+     "format": "int64"
+    },
+    "ID": {
+     "description": "Unique ID of offer or deposit/withdraw operation",
+     "type": "string"
+    },
+    "OperationType": {
+     "type": "string",
+     "enum": [
+      "Deposit",
+      "Withdraw",
+      "Buy",
+      "Sell"
+     ]
+    }
+   }
+  },
+  "representation.AccountingReportRequest": {
+   "required": [
+    "DateStart",
+    "DateEnd"
+   ],
+   "properties": {
+    "DateEnd": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "DateStart": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.AccountingReportResponse": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "Raw data",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.AccountingReportItem"
+     }
+    }
+   }
+  },
+  "representation.AddAssetToExportTradeRequest": {
+   "required": [
+    "assetId"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.AddAssetToImportTradeRequest": {
+   "required": [
+    "assetId"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "fee": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.AddOffer": {
+   "required": [
+    "offerId",
+    "ecommerce"
+   ],
+   "properties": {
+    "ecommerce": {
+     "$ref": "#/definitions/representation.Ecommerce"
+    },
+    "offerId": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.AdditionalInfo": {
+   "required": [
+    "videos",
+    "subscribers",
+    "grow",
+    "index",
+    "ability",
+    "serialNumber"
+   ],
+   "properties": {
+    "ability": {
+     "type": "string"
+    },
+    "grow": {
+     "type": "number",
+     "format": "double"
+    },
+    "index": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "serialNumber": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "subscribers": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "videos": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.AggregatedClassImage": {
+   "required": [
+    "imageUrl"
+   ],
+   "properties": {
+    "imageUrl": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.AggregatedClassResponse": {
+   "required": [
+    "classId",
+    "title",
+    "images",
+    "gameId",
+    "gameName",
+    "cheapestOfferPrice",
+    "cheapestOfferId",
+    "mostExpensiveOfferPrice",
+    "mostExpensiveOfferId",
+    "totalSellOffers",
+    "description",
+    "lastUpdate",
+    "tags",
+    "slug",
+    "nameColor",
+    "backgroundColor",
+    "steamAvgPrice",
+    "steamLinks",
+    "offerPrices",
+    "additionalInfo"
+   ],
+   "properties": {
+    "additionalInfo": {
+     "$ref": "#/definitions/representation.AdditionalInfo"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "cheapestOfferId": {
+     "type": "string"
+    },
+    "cheapestOfferPrice": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "images": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.AggregatedClassImage"
+     }
+    },
+    "lastUpdate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "mostExpensiveOfferId": {
+     "type": "string"
+    },
+    "mostExpensiveOfferPrice": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerPrices": {
+     "$ref": "#/definitions/representation.OfferPrices"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "steamAvgPrice": {
+     "type": "number",
+     "format": "double"
+    },
+    "steamLinks": {
+     "$ref": "#/definitions/representation.SteamLinks"
+    },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "totalSellOffers": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.AggregatedClassesListItem": {
+   "required": [
+    "classId",
+    "title",
+    "imageUrl",
+    "gameId",
+    "gameName",
+    "cheapestOfferId",
+    "mostExpensiveOfferId",
+    "totalSellOffers",
+    "lastUpdate",
+    "nameColor",
+    "backgroundColor",
+    "tags",
+    "slug",
+    "steamAvgPrice",
+    "offerPrices",
+    "additionalInfo",
+    "mostExpensiveOfferPrice",
+    "cheapestOfferPrice"
+   ],
+   "properties": {
+    "additionalInfo": {
+     "$ref": "#/definitions/representation.AdditionalInfo"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "cheapestOfferId": {
+     "type": "string"
+    },
+    "cheapestOfferPrice": {
+     "type": "string"
+    },
+    "classId": {
+     "description": "DMarket internal classID",
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "lastUpdate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "mostExpensiveOfferId": {
+     "type": "string"
+    },
+    "mostExpensiveOfferPrice": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerPrices": {
+     "$ref": "#/definitions/representation.OfferPrices"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "steamAvgPrice": {
+     "type": "number",
+     "format": "double"
+    },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "totalSellOffers": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.AggregatedClassesListResponse": {
+   "required": [
+    "objects",
+    "total",
+    "totalOffers",
+    "minOfferPrice",
+    "maxOfferPrice",
+    "minPrice",
+    "maxPrice"
+   ],
+   "properties": {
+    "maxOfferPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "maxPrice": {
+     "type": "string"
+    },
+    "minOfferPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "minPrice": {
+     "type": "string"
+    },
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.AggregatedClassesListItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "totalOffers": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.AgreementsInfo": {
+   "required": [
+    "isConfirmed",
+    "updated"
+   ],
+   "properties": {
+    "isConfirmed": {
+     "type": "boolean"
+    },
+    "updated": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ApplicationRequest": {
+   "required": [
+    "companyName",
+    "company_website",
+    "name",
+    "surname",
+    "email",
+    "projects"
+   ],
+   "properties": {
+    "companyName": {
+     "type": "string"
+    },
+    "company_website": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "projects": {
+     "type": "string"
+    },
+    "recapchaResponse": {
+     "type": "string"
+    },
+    "surname": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ApplicationResponse": {
+   "required": [
+    "success"
+   ],
+   "properties": {
+    "success": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Asset": {
+   "required": [
+    "id"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.AssetResponse": {
+   "required": [
+    "assetId",
+    "title",
+    "gameTitle",
+    "imageUrl"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "gameTitle": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.AssetToTransfer": {
+   "required": [
+    "id",
+    "gameID",
+    "provider",
+    "recipient"
+   ],
+   "properties": {
+    "gameID": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Autobots",
+      "Decepticons",
+      "Blockchain"
+     ]
+    },
+    "recipient": {
+     "description": "recipient steam id",
+     "type": "string"
+    }
+   }
+  },
+  "representation.AvailableItem": {
+   "required": [
+    "classId",
+    "title",
+    "imageUrl",
+    "gameId",
+    "gameName",
+    "gameImageURL",
+    "gameType",
+    "cheapestOfferPrice",
+    "cheapestOfferId",
+    "mostExpensiveOfferPrice",
+    "mostExpensiveOfferId",
+    "totalSellOffers",
+    "lastUpdate",
+    "nameColor",
+    "backgroundColor",
+    "tags",
+    "slug",
+    "offerPrices"
+   ],
+   "properties": {
+    "backgroundColor": {
+     "type": "string"
+    },
+    "cheapestOfferId": {
+     "type": "string"
+    },
+    "cheapestOfferPrice": {
+     "type": "string"
+    },
+    "classId": {
+     "description": "DMarket internal classID",
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameImageURL": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "gameType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "lastUpdate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "mostExpensiveOfferId": {
+     "type": "string"
+    },
+    "mostExpensiveOfferPrice": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerPrices": {
+     "$ref": "#/definitions/representation.OfferPrices"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "totalSellOffers": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.AvailableItemsResponse": {
+   "required": [
+    "objects",
+    "games"
+   ],
+   "properties": {
+    "games": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.GameItem"
+     }
+    },
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.AvailableItem"
+     }
+    }
+   }
+  },
+  "representation.Balance": {
+   "required": [
+    "DMC",
+    "USD",
+    "DMCAvailableToWithdraw",
+    "USDAvailableToWithdraw"
+   ],
+   "properties": {
+    "DMC": {
+     "type": "string"
+    },
+    "DMCAvailableToWithdraw": {
+     "type": "string"
+    },
+    "USD": {
+     "type": "string"
+    },
+    "USDAvailableToWithdraw": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Bundle": {
+   "required": [
+    "id",
+    "title",
+    "image",
+    "description",
+    "gameId",
+    "commodities",
+    "price",
+    "suggestedPrice",
+    "discount"
+   ],
+   "properties": {
+    "commodities": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "integer"
+     }
+    },
+    "description": {
+     "type": "string"
+    },
+    "discount": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "image": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "suggestedPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.BuyCartRequest": {
+   "required": [
+    "currency"
+   ],
+   "properties": {
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    }
+   }
+  },
+  "representation.BuyOfferRequest": {
+   "required": [
+    "price"
+   ],
+   "properties": {
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.BuyOfferResponse": {
+   "required": [
+    "id",
+    "assetId",
+    "creatingDate",
+    "updatingDate",
+    "acceptingDate",
+    "status",
+    "price",
+    "sellerId",
+    "buyerId"
+   ],
+   "properties": {
+    "acceptingDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "assetId": {
+     "type": "string"
+    },
+    "buyerId": {
+     "type": "string"
+    },
+    "creatingDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "sellerId": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "updatingDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.BuyOfferTradingRequest": {
+   "required": [
+    "OfferID",
+    "Price"
+   ],
+   "properties": {
+    "OfferID": {
+     "description": "Unique offer ID",
+     "type": "string"
+    },
+    "Price": {
+     "description": "Price to buy for. Used to double-check that price didn't change between calls'",
+     "$ref": "#/definitions/representation.TradingMoney"
+    }
+   }
+  },
+  "representation.BuyOfferTradingResponse": {
+   "required": [
+    "OfferID",
+    "Currency",
+    "Status"
+   ],
+   "properties": {
+    "BuyOperationID": {
+     "description": "Unique ID of buy operation",
+     "type": "string"
+    },
+    "Currency": {
+     "type": "string",
+     "enum": [
+      "USD"
+     ]
+    },
+    "Error": {
+     "description": "Error code if there was problems during buy process",
+     "type": "string"
+    },
+    "OfferID": {
+     "description": "Unique offer ID",
+     "type": "string"
+    },
+    "Status": {
+     "description": "Offer state",
+     "type": "string",
+     "enum": [
+      "OnSale",
+      "Processing",
+      "Cancelled",
+      "Sold",
+      "Error"
+     ]
+    }
+   }
+  },
+  "representation.BuyOffersTradingRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.BuyOfferTradingRequest"
+     }
+    }
+   }
+  },
+  "representation.BuyOffersTradingResponse": {
+   "required": [
+    "Items",
+    "HasErrors",
+    "TotalSucceed",
+    "TotalFailed"
+   ],
+   "properties": {
+    "HasErrors": {
+     "description": "Indicates if there was errors during operation",
+     "type": "boolean"
+    },
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.BuyOfferTradingResponse"
+     }
+    },
+    "TotalFailed": {
+     "description": "Number of failed operations",
+     "type": "integer",
+     "format": "int32"
+    },
+    "TotalSucceed": {
+     "description": "Number of successful operations",
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.BuyRequest": {
+   "required": [
+    "bundleId",
+    "price"
+   ],
+   "properties": {
+    "bundleId": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.CalculateFeeRequest": {
+   "required": [
+    "gameId",
+    "price"
+   ],
+   "properties": {
+    "gameId": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.CalculateFeeResponse": {
+   "required": [
+    "fee",
+    "sellerProfit",
+    "minFee"
+   ],
+   "properties": {
+    "fee": {
+     "type": "string"
+    },
+    "minFee": {
+     "type": "string"
+    },
+    "sellerProfit": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.CancelOfferTrading": {
+   "required": [
+    "OfferID"
+   ],
+   "properties": {
+    "OfferID": {
+     "description": "Unique offer ID",
+     "type": "string"
+    }
+   }
+  },
+  "representation.CancelOfferTradingRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CancelOfferTrading"
+     }
+    }
+   }
+  },
+  "representation.Cart": {
+   "required": [
+    "offers"
+   ],
+   "properties": {
+    "offers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Item"
+     }
+    }
+   }
+  },
+  "representation.CartAssetExtension": {
+   "required": [
+    "image",
+    "name",
+    "type",
+    "extension"
+   ],
+   "properties": {
+    "extension": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.CartEcommercePlace": {
+   "required": [
+    "game",
+    "place",
+    "classID",
+    "position"
+   ],
+   "properties": {
+    "classID": {
+     "type": "string"
+    },
+    "game": {
+     "type": "string"
+    },
+    "place": {
+     "type": "string"
+    },
+    "position": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ChangeOrderPrice": {
+   "required": [
+    "orderId",
+    "price",
+    "currency"
+   ],
+   "properties": {
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "orderId": {
+     "description": "Unique order ID",
+     "type": "string"
+    },
+    "price": {
+     "description": "New desired price of this purchase order",
+     "type": "string"
+    }
+   }
+  },
+  "representation.ChangeOrderPriceRequest": {
+   "required": [
+    "orderId",
+    "price",
+    "currency"
+   ],
+   "properties": {
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "orderId": {
+     "type": "string"
+    },
+    "price": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ChangePasswordRequest": {
+   "required": [
+    "password",
+    "oldPassword"
+   ],
+   "properties": {
+    "oldPassword": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ChangeSellOfferRequest": {
+   "required": [
+    "offerId",
+    "seller",
+    "price",
+    "fee"
+   ],
+   "properties": {
+    "fee": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "seller": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ChangeTradeOrderPriceRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of orders to change price",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ChangeOrderPrice"
+     }
+    }
+   }
+  },
+  "representation.ClassDetailsImage": {
+   "required": [
+    "imageUrl"
+   ],
+   "properties": {
+    "imageUrl": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ClassDetailsResponse": {
+   "required": [
+    "classId",
+    "title",
+    "gameId",
+    "gameName",
+    "description",
+    "images"
+   ],
+   "properties": {
+    "ability": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "grow": {
+     "type": "number",
+     "format": "double"
+    },
+    "images": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ClassDetailsImage"
+     }
+    },
+    "serialNumber": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "subscribers": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "title": {
+     "type": "string"
+    },
+    "videos": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ConfirmAgreementsRequest": {
+   "required": [
+    "isConfirmedAgreements",
+    "isSubscribedToNewsletters"
+   ],
+   "properties": {
+    "isConfirmedAgreements": {
+     "type": "boolean"
+    },
+    "isSubscribedToNewsletters": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.ContactUsRequest": {
+   "required": [
+    "emailFrom",
+    "body"
+   ],
+   "properties": {
+    "body": {
+     "type": "string"
+    },
+    "emailFrom": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Contractor": {
+   "required": [
+    "id",
+    "title",
+    "type"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "game",
+      "payment_system"
+     ]
+    }
+   }
+  },
+  "representation.CountValuePair": {
+   "required": [
+    "itemsCount",
+    "itemsValueDMC"
+   ],
+   "properties": {
+    "itemsCount": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "itemsValueDMC": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.CreateNewPassword": {
+   "required": [
+    "password"
+   ],
+   "properties": {
+    "password": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.CreateOfferTrading": {
+   "required": [
+    "AssetID",
+    "AssetProvider",
+    "Price"
+   ],
+   "properties": {
+    "AssetID": {
+     "description": "DMarket asset ID, obtained after successful import",
+     "type": "string"
+    },
+    "AssetProvider": {
+     "description": "Provider of assets. Now this API supports only Steam",
+     "type": "string",
+     "enum": [
+      "Steam"
+     ]
+    },
+    "Price": {
+     "description": "Price for new offer",
+     "$ref": "#/definitions/representation.TradingMoney"
+    }
+   }
+  },
+  "representation.CreateOffersTradingRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of assets to put on sale",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CreateOfferTrading"
+     }
+    }
+   }
+  },
+  "representation.CreateOrderRequest": {
+   "required": [
+    "classId",
+    "price",
+    "currency"
+   ],
+   "properties": {
+    "classId": {
+     "type": "string"
+    },
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "price": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.CreateOrderResponse": {
+   "required": [
+    "OrderID",
+    "ClassID",
+    "Price",
+    "Currency",
+    "Failed"
+   ],
+   "properties": {
+    "ClassID": {
+     "type": "string"
+    },
+    "Currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "Error": {
+     "type": "string"
+    },
+    "Failed": {
+     "type": "boolean"
+    },
+    "OrderID": {
+     "type": "string"
+    },
+    "Price": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.CreateOrderTradingResponse": {
+   "required": [
+    "Items",
+    "HasErrors",
+    "TotalSucceed",
+    "TotalFailed"
+   ],
+   "properties": {
+    "HasErrors": {
+     "description": "Indicates if there was errors during operation",
+     "type": "boolean"
+    },
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CreateOrderResponse"
+     }
+    },
+    "TotalFailed": {
+     "description": "Number of failed operations",
+     "type": "integer",
+     "format": "int32"
+    },
+    "TotalSucceed": {
+     "description": "Number of successful operations",
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.CreateTradeOrder": {
+   "required": [
+    "ClassID",
+    "Price",
+    "Currency"
+   ],
+   "properties": {
+    "ClassID": {
+     "description": "Item ClassID",
+     "type": "string"
+    },
+    "Currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "Price": {
+     "description": "Desired price of this purchase order",
+     "type": "string"
+    }
+   }
+  },
+  "representation.CreateTradeOrderRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of orders to create",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CreateTradeOrder"
+     }
+    }
+   }
+  },
+  "representation.CurrencyLimit": {
+   "required": [
+    "minimalDeposit",
+    "minimalWithdraw"
+   ],
+   "properties": {
+    "minimalDeposit": {
+     "type": "number",
+     "format": "double"
+    },
+    "minimalWithdraw": {
+     "type": "number",
+     "format": "double"
+    }
+   }
+  },
+  "representation.CurrencyRate": {
+   "required": [
+    "base",
+    "counter",
+    "rate"
+   ],
+   "properties": {
+    "base": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "counter": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "rate": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Ecommerce": {
+   "required": [
+    "category",
+    "variant",
+    "place"
+   ],
+   "properties": {
+    "category": {
+     "type": "string"
+    },
+    "place": {
+     "$ref": "#/definitions/representation.CartEcommercePlace"
+    },
+    "variant": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.EmailExistsRequest": {
+   "required": [
+    "email"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.EmailExistsResponse": {
+   "required": [
+    "exists"
+   ],
+   "properties": {
+    "exists": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.Event": {
+   "required": [
+    "id",
+    "accountId",
+    "isViewed",
+    "createdDate"
+   ],
+   "properties": {
+    "accountId": {
+     "type": "string"
+    },
+    "createdDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "eventName": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "isViewed": {
+     "type": "boolean"
+    },
+    "payload": {
+     "$ref": "#/definitions/representation.Event.payload"
+    },
+    "viewedDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.Event.payload": {},
+  "representation.Events": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Event"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ExchangeRateResponse": {
+   "required": [
+    "rate"
+   ],
+   "properties": {
+    "rate": {
+     "type": "number",
+     "format": "double"
+    }
+   }
+  },
+  "representation.ExportItemRequest": {
+   "required": [
+    "AssetID"
+   ],
+   "properties": {
+    "AssetID": {
+     "description": "Unique ID of asset on DMarket",
+     "type": "string"
+    },
+    "TradeURL": {
+     "description": "Steam url for create trade",
+     "type": "string"
+    }
+   }
+  },
+  "representation.ExportItemResponse": {
+   "required": [
+    "OperationID",
+    "SteamTradeID",
+    "State",
+    "Assets",
+    "ErrorMessage"
+   ],
+   "properties": {
+    "Assets": {
+     "description": "List of offers which was affected by operation",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ExportedItem"
+     }
+    },
+    "ErrorMessage": {
+     "description": "Export operation last error message. Can be empty",
+     "type": "string"
+    },
+    "OperationID": {
+     "description": "Unique ID of export operation",
+     "type": "string"
+    },
+    "State": {
+     "description": "Trade state",
+     "type": "string",
+     "enum": [
+      "Created",
+      "WaitingForCreationTrade",
+      "WaitingForAcceptance",
+      "Accepted",
+      "Failed",
+      "Error",
+      "Closed",
+      "Deleted"
+     ]
+    },
+    "SteamTradeID": {
+     "description": "ID of created trade offer on Steam, can be empty if trade was not created",
+     "type": "string"
+    }
+   }
+  },
+  "representation.ExportOperationsReportItem": {
+   "required": [
+    "OperationID",
+    "SteamTradeID",
+    "State",
+    "Created",
+    "Skins"
+   ],
+   "properties": {
+    "Created": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "OperationID": {
+     "type": "string"
+    },
+    "Skins": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ExportOperationsReportItemSkin"
+     }
+    },
+    "State": {
+     "type": "string",
+     "enum": [
+      "Created",
+      "WaitingForCreationTrade",
+      "WaitingForAcceptance",
+      "Accepted",
+      "Failed",
+      "Error",
+      "Closed",
+      "Deleted"
+     ]
+    },
+    "SteamTradeID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ExportOperationsReportItemSkin": {
+   "required": [
+    "AssetID",
+    "SteamAssetID",
+    "Processed"
+   ],
+   "properties": {
+    "AssetID": {
+     "type": "string"
+    },
+    "Processed": {
+     "type": "boolean"
+    },
+    "SteamAssetID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ExportOperationsReportRequest": {
+   "required": [
+    "Limit",
+    "Offset"
+   ],
+   "properties": {
+    "Limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "Offset": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.ExportOperationsReportResponse": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ExportOperationsReportItem"
+     }
+    }
+   }
+  },
+  "representation.ExportTradeResponse": {
+   "required": [
+    "assets",
+    "hash",
+    "state",
+    "errors"
+   ],
+   "properties": {
+    "assets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Asset"
+     }
+    },
+    "errors": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.TradeError"
+     }
+    },
+    "hash": {
+     "type": "string"
+    },
+    "started": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "state": {
+     "type": "string",
+     "enum": [
+      "Created",
+      "WaitingForCreationTrade",
+      "WaitingForAcceptance",
+      "Accepted",
+      "Failed",
+      "Error",
+      "Closed"
+     ]
+    },
+    "steamTradeId": {
+     "type": "string"
+    },
+    "timer": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ExportedItem": {
+   "required": [
+    "AssetID"
+   ],
+   "properties": {
+    "AssetID": {
+     "description": "Unique ID of asset on DMarket",
+     "type": "string"
+    }
+   }
+  },
+  "representation.FavouriteGame": {
+   "required": [
+    "gameId",
+    "itemsNumber"
+   ],
+   "properties": {
+    "gameId": {
+     "type": "string"
+    },
+    "itemsNumber": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.FavouriteGames": {
+   "required": [
+    "list",
+    "totalItems",
+    "totalGames"
+   ],
+   "properties": {
+    "list": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.FavouriteGame"
+     }
+    },
+    "totalGames": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "totalItems": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.Fee": {
+   "required": [
+    "total"
+   ],
+   "properties": {
+    "total": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.FilterItem": {
+   "required": [
+    "value",
+    "title",
+    "multiSelection",
+    "displayType",
+    "filterItems"
+   ],
+   "properties": {
+    "displayType": {
+     "type": "string",
+     "enum": [
+      "CheckBox",
+      "DropDown"
+     ]
+    },
+    "filterItems": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.FilterItem"
+     }
+    },
+    "multiSelection": {
+     "type": "boolean"
+    },
+    "title": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GTMStatRequest": {
+   "required": [
+    "userID",
+    "fingerPrint",
+    "utmSource",
+    "utmMedium",
+    "isGTMActive"
+   ],
+   "properties": {
+    "fingerPrint": {
+     "type": "string"
+    },
+    "isGTMActive": {
+     "type": "boolean"
+    },
+    "userID": {
+     "type": "string"
+    },
+    "utmMedium": {
+     "type": "string"
+    },
+    "utmSource": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GameCategoryRepresentation": {
+   "required": [
+    "title",
+    "value",
+    "categories"
+   ],
+   "properties": {
+    "categories": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.GameCategoryRepresentation"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GameFilters": {
+   "required": [
+    "items"
+   ],
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.FilterItem"
+     }
+    }
+   }
+  },
+  "representation.GameItem": {
+   "required": [
+    "id",
+    "title",
+    "slug",
+    "type",
+    "imageURL",
+    "totalSellOffers"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "imageURL": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "totalSellOffers": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    }
+   }
+  },
+  "representation.GameRepresentation": {
+   "required": [
+    "id",
+    "slug",
+    "title",
+    "originalName",
+    "gameType",
+    "gameCurrency",
+    "imageUrl",
+    "logoImageUrl",
+    "backgroundImageUrl",
+    "headerBackgroundImageUrl",
+    "inventoryBgImageUrl",
+    "placeholderImageUrl",
+    "description",
+    "slogan",
+    "created",
+    "updated",
+    "hasFloatValue",
+    "isColorDiffEnabled",
+    "isTradableLockEnabled",
+    "authMethods"
+   ],
+   "properties": {
+    "authMethods": {
+     "type": "array",
+     "enum": [
+      "steam"
+     ],
+     "items": {
+      "type": "string",
+      "enum": [
+       "steam"
+      ]
+     }
+    },
+    "backgroundImageUrl": {
+     "type": "string"
+    },
+    "created": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "description": {
+     "type": "string"
+    },
+    "gameCurrency": {
+     "type": "string"
+    },
+    "gameType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    },
+    "hasFloatValue": {
+     "type": "boolean"
+    },
+    "headerBackgroundImageUrl": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "inventoryBgImageUrl": {
+     "type": "string"
+    },
+    "isColorDiffEnabled": {
+     "type": "boolean"
+    },
+    "isTradableLockEnabled": {
+     "type": "boolean"
+    },
+    "logoImageUrl": {
+     "type": "string"
+    },
+    "originalName": {
+     "type": "string"
+    },
+    "placeholderImageUrl": {
+     "type": "string"
+    },
+    "slogan": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "updated": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.GameSorting": {
+   "required": [
+    "productCart",
+    "itemList"
+   ],
+   "properties": {
+    "itemList": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.GameSortingItem"
+     }
+    },
+    "productCart": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.GameSortingItem"
+     }
+    }
+   }
+  },
+  "representation.GameSortingItem": {
+   "required": [
+    "orderBy",
+    "orderDir",
+    "title"
+   ],
+   "properties": {
+    "orderBy": {
+     "type": "string"
+    },
+    "orderDir": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GamesRepresentation": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.GameRepresentation"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.GeneratePaymentLinkRequest": {
+   "required": [
+    "successUrl",
+    "failUrl",
+    "currency",
+    "language"
+   ],
+   "properties": {
+    "currency": {
+     "type": "string"
+    },
+    "failUrl": {
+     "type": "string"
+    },
+    "language": {
+     "type": "string"
+    },
+    "successUrl": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GetBundleRequest": {
+   "required": [
+    "id"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GetBundleResponse": {
+   "required": [
+    "id",
+    "title",
+    "image",
+    "description",
+    "gameId",
+    "discount",
+    "commodities",
+    "price",
+    "suggestedPrice",
+    "prices"
+   ],
+   "properties": {
+    "commodities": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "integer"
+     }
+    },
+    "description": {
+     "type": "string"
+    },
+    "discount": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "image": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "prices": {
+     "$ref": "#/definitions/representation.Prices"
+    },
+    "suggestedPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GetBundlesRequest": {
+   "required": [
+    "gameId"
+   ],
+   "properties": {
+    "gameId": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GetBundlesResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Bundle"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.GetOrdersResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Order"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.GetSellOfferResponse": {
+   "required": [
+    "id",
+    "assetId",
+    "creatingDate",
+    "updatingDate",
+    "acceptingDate",
+    "status",
+    "price",
+    "sellerId",
+    "buyerId"
+   ],
+   "properties": {
+    "acceptingDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "assetId": {
+     "type": "string"
+    },
+    "buyerId": {
+     "type": "string"
+    },
+    "creatingDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "id": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "sellerId": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "updatingDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.GetSourceRequest": {
+   "required": [
+    "hash"
+   ],
+   "properties": {
+    "hash": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.GiveAwayResponse": {
+   "required": [
+    "url"
+   ],
+   "properties": {
+    "url": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.HistoryEvent": {
+   "required": [
+    "type",
+    "id",
+    "customId",
+    "emitter",
+    "action",
+    "subject",
+    "contractor",
+    "changes",
+    "status",
+    "createdAt"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "changes": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Money"
+     }
+    },
+    "contractor": {
+     "$ref": "#/definitions/representation.Contractor"
+    },
+    "createdAt": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "customId": {
+     "type": "string"
+    },
+    "emitter": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "subject": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "cash_deposit",
+      "cash_withdraw",
+      "import",
+      "export",
+      "deposit",
+      "withdraw",
+      "put_up_for_sale",
+      "change_price",
+      "remove_from_sale",
+      "sell",
+      "purchase",
+      "redeem",
+      "freeze"
+     ]
+    }
+   }
+  },
+  "representation.HistoryRequest": {
+   "required": [
+    "activities",
+    "statuses",
+    "from",
+    "to",
+    "limit",
+    "offset"
+   ],
+   "properties": {
+    "activities": {
+     "type": "array",
+     "enum": [
+      "cash_deposit",
+      "cash_withdraw",
+      "import",
+      "export",
+      "deposit",
+      "withdraw",
+      "put_up_for_sale",
+      "change_price",
+      "remove_from_sale",
+      "sell",
+      "purchase",
+      "redeem",
+      "freeze"
+     ],
+     "items": {
+      "type": "string",
+      "enum": [
+       "cash_deposit",
+       "cash_withdraw",
+       "import",
+       "export",
+       "deposit",
+       "withdraw",
+       "put_up_for_sale",
+       "change_price",
+       "remove_from_sale",
+       "sell",
+       "purchase",
+       "redeem",
+       "freeze"
+      ]
+     }
+    },
+    "from": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "offset": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "statuses": {
+     "type": "array",
+     "enum": [
+      "success",
+      "pending",
+      "canceled",
+      "failed"
+     ],
+     "items": {
+      "type": "string",
+      "enum": [
+       "success",
+       "pending",
+       "canceled",
+       "failed"
+      ]
+     }
+    },
+    "to": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.HistoryResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.HistoryEvent"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ImportItemsRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of Steam skins to import",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SteamItem"
+     }
+    }
+   }
+  },
+  "representation.ImportOperationResponse": {
+   "required": [
+    "OperationID",
+    "SteamTradeID",
+    "SteamTradeState",
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of items that was imported within this operation, each item contain DMarket asset ID and Steam skin identifiers",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ImportedSteamItem"
+     }
+    },
+    "OperationID": {
+     "description": "Unique ID of import operation",
+     "type": "string"
+    },
+    "SteamTradeID": {
+     "description": "ID of created trade offer on Steam, can be empty if trade was not created",
+     "type": "string"
+    },
+    "SteamTradeState": {
+     "type": "string",
+     "enum": [
+      "UnknownTradeState",
+      "TradeOfferInvalid",
+      "TradeOfferActive",
+      "TradeOfferAccepted",
+      "TradeOfferCountered",
+      "TradeOfferExpired",
+      "TradeOfferCanceled",
+      "TradeOfferDeclined",
+      "TradeOfferInvalidItems",
+      "TradeOfferCreatedNeedsConfirmation",
+      "TradeOfferCanceledBySecondFactor",
+      "TradeOfferInEscrow",
+      "ErrorDuringTradeCreateState"
+     ]
+    }
+   }
+  },
+  "representation.ImportOperationsReportRequest": {
+   "required": [
+    "Limit",
+    "Offset"
+   ],
+   "properties": {
+    "Limit": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "Offset": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.ImportOperationsReportResponse": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ImportOperationResponse"
+     }
+    }
+   }
+  },
+  "representation.ImportedSteamItem": {
+   "required": [
+    "SteamInstanceID",
+    "SteamAssetID",
+    "SteamContextID",
+    "SteamAppID",
+    "SteamClassID"
+   ],
+   "properties": {
+    "AssetID": {
+     "description": "Unique ID of asset on DMarket",
+     "type": "string"
+    },
+    "SteamAppID": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "SteamAssetID": {
+     "type": "string"
+    },
+    "SteamClassID": {
+     "type": "string"
+    },
+    "SteamContextID": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "SteamInstanceID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.InfoRepresentation": {
+   "required": [
+    "referalLink",
+    "referalPercent",
+    "referalsCount",
+    "refBalance"
+   ],
+   "properties": {
+    "refBalance": {
+     "$ref": "#/definitions/representation.Balance"
+    },
+    "referalLink": {
+     "type": "string"
+    },
+    "referalPercent": {
+     "type": "number",
+     "format": "double"
+    },
+    "referalsCount": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.InventoryAssetExtension": {
+   "required": [
+    "image",
+    "name",
+    "type",
+    "extension"
+   ],
+   "properties": {
+    "extension": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.InventoryItem": {
+   "required": [
+    "assetId",
+    "classId",
+    "title",
+    "description",
+    "imageUrl",
+    "gameId",
+    "gameType",
+    "status",
+    "offerId",
+    "provider",
+    "stickers",
+    "extensions",
+    "floatValue",
+    "quality",
+    "tradable",
+    "backgroundColor",
+    "nameColor",
+    "slug",
+    "steamLinks",
+    "isNew",
+    "type",
+    "isHasPrimaryStore",
+    "additionalInfo"
+   ],
+   "properties": {
+    "additionalInfo": {
+     "$ref": "#/definitions/representation.AdditionalInfo"
+    },
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "extensions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryAssetExtension"
+     }
+    },
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "isHasPrimaryStore": {
+     "type": "boolean"
+    },
+    "isNew": {
+     "type": "boolean"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "notTradableSeconds": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain",
+      "Decepticons",
+      "ICS",
+      "AppendICS"
+     ]
+    },
+    "quality": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string",
+     "enum": [
+      "Default",
+      "OnSale",
+      "OnExchange",
+      "InTrade",
+      "Frozen",
+      "Pending"
+     ]
+    },
+    "steamLinks": {
+     "$ref": "#/definitions/representation.SteamLinks"
+    },
+    "stickers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryItemSticker"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "tradable": {
+     "type": "boolean"
+    },
+    "type": {
+     "type": "array",
+     "enum": [
+      "asset",
+      "cards",
+      "airdrop",
+      "withdrawable",
+      "depositable",
+      "exportable",
+      "importable"
+     ],
+     "items": {
+      "type": "string",
+      "enum": [
+       "asset",
+       "cards",
+       "airdrop",
+       "withdrawable",
+       "depositable",
+       "exportable",
+       "importable"
+      ]
+     }
+    }
+   }
+  },
+  "representation.InventoryItemSticker": {
+   "required": [
+    "image",
+    "name"
+   ],
+   "properties": {
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Item": {
+   "required": [
+    "assetId",
+    "classId",
+    "title",
+    "description",
+    "imageUrl",
+    "gameId",
+    "gameType",
+    "status",
+    "offerId",
+    "lastUpdateType",
+    "nameColor",
+    "backgroundColor",
+    "prices",
+    "stickers",
+    "extensions",
+    "floatValue",
+    "quality",
+    "currencyEnum",
+    "slug",
+    "steamLinks",
+    "addedCartDate",
+    "ecommerce"
+   ],
+   "properties": {
+    "addedCartDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "currencyEnum": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "description": {
+     "type": "string"
+    },
+    "ecommerce": {
+     "$ref": "#/definitions/representation.Ecommerce"
+    },
+    "extensions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CartAssetExtension"
+     }
+    },
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameType": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "lastUpdateType": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "prices": {
+     "$ref": "#/definitions/representation.Prices"
+    },
+    "quality": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "steamLinks": {
+     "$ref": "#/definitions/representation.SteamLinks"
+    },
+    "stickers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ItemSticker"
+     }
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ItemInfo": {
+   "required": [
+    "floatValue"
+   ],
+   "properties": {
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    }
+   }
+  },
+  "representation.ItemSoldBought": {
+   "required": [
+    "itemTitle",
+    "itemImage",
+    "priceDMC"
+   ],
+   "properties": {
+    "itemImage": {
+     "type": "string"
+    },
+    "itemTitle": {
+     "type": "string"
+    },
+    "priceDMC": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.ItemSticker": {
+   "required": [
+    "image",
+    "name"
+   ],
+   "properties": {
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.LandingGameRepresentation": {
+   "required": [
+    "id",
+    "slug",
+    "isComingSoon",
+    "title",
+    "landingURL",
+    "landingImages",
+    "offersCount"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "isComingSoon": {
+     "type": "boolean"
+    },
+    "landingImages": {
+     "$ref": "#/definitions/representation.LandingImages"
+    },
+    "landingURL": {
+     "type": "string"
+    },
+    "offersCount": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.LandingGamesRepresentation": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.LandingGameRepresentation"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.LandingImages": {
+   "required": [
+    "desktopImageUrl",
+    "mobileImageUrl"
+   ],
+   "properties": {
+    "desktopImageUrl": {
+     "type": "string"
+    },
+    "mobileImageUrl": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.LiveFeedItem": {
+   "required": [
+    "offerId",
+    "classId",
+    "title",
+    "imageUrl",
+    "price",
+    "currency",
+    "closed",
+    "nameColor",
+    "backgroundColor",
+    "gameId",
+    "tags",
+    "slug"
+   ],
+   "properties": {
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "closed": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "currency": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "price": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.LiveFeedItemsResponse": {
+   "required": [
+    "objects",
+    "total",
+    "totalSold"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.LiveFeedItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "totalSold": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.MedianPriceResponse": {
+   "required": [
+    "medianPrice"
+   ],
+   "properties": {
+    "medianPrice": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Money": {
+   "required": [
+    "amount",
+    "currency"
+   ],
+   "properties": {
+    "amount": {
+     "type": "string"
+    },
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    }
+   }
+  },
+  "representation.MostPopularItem": {
+   "required": [
+    "classId",
+    "title",
+    "imageUrl",
+    "gameId",
+    "gameName",
+    "nameColor",
+    "backgroundColor",
+    "tags",
+    "slug"
+   ],
+   "properties": {
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "price": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.MostPopularItemsResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.MostPopularItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.MyItemsResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "error": {
+     "type": "string"
+    },
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.NewsSubscriptionRequest": {
+   "required": [
+    "email",
+    "recaptchaResponse",
+    "subscribedFrom",
+    "agreementsAccepted"
+   ],
+   "properties": {
+    "agreementsAccepted": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "recaptchaResponse": {
+     "type": "string"
+    },
+    "subscribedFrom": {
+     "type": "string",
+     "enum": [
+      "homepage",
+      "aboutUs",
+      "dheroesLanding",
+      "dheroesLandingIPDenied"
+     ]
+    }
+   }
+  },
+  "representation.NewsSubscriptionResponse": {
+   "required": [
+    "success"
+   ],
+   "properties": {
+    "success": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.OfferAssetExtension": {
+   "required": [
+    "image",
+    "name",
+    "type",
+    "extension"
+   ],
+   "properties": {
+    "extension": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.OfferPrices": {
+   "required": [
+    "cheapest",
+    "mostExpensive",
+    "suggested"
+   ],
+   "properties": {
+    "cheapest": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "mostExpensive": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "suggested": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.OfferTradingResponse": {
+   "required": [
+    "OfferID",
+    "AssetID",
+    "AssetProvider",
+    "Price",
+    "State",
+    "Failed"
+   ],
+   "properties": {
+    "AssetID": {
+     "description": "Unique asset ID on DMarket",
+     "type": "string"
+    },
+    "AssetProvider": {
+     "description": "Provider of assets. Now this API supports only Steam",
+     "type": "string",
+     "enum": [
+      "Steam"
+     ]
+    },
+    "Error": {
+     "description": "Error code if there was problems during buy process",
+     "type": "string"
+    },
+    "Failed": {
+     "description": "Indicates if offed had errors during buy",
+     "type": "boolean"
+    },
+    "OfferID": {
+     "description": "Unique offer ID",
+     "type": "string"
+    },
+    "Price": {
+     "description": "Price of this offer",
+     "$ref": "#/definitions/representation.TradingMoney"
+    },
+    "State": {
+     "description": "Offer state",
+     "type": "string",
+     "enum": [
+      "OnSale",
+      "Processing",
+      "Cancelled",
+      "Sold",
+      "Error"
+     ]
+    }
+   }
+  },
+  "representation.OffersTradingResponse": {
+   "required": [
+    "Items",
+    "HasErrors",
+    "TotalSucceed",
+    "TotalFailed"
+   ],
+   "properties": {
+    "HasErrors": {
+     "description": "Indicates if there was errors during operation",
+     "type": "boolean"
+    },
+    "Items": {
+     "description": "List of offers which was affected by operation",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.OfferTradingResponse"
+     }
+    },
+    "TotalFailed": {
+     "description": "Number of failed operations",
+     "type": "integer",
+     "format": "int32"
+    },
+    "TotalSucceed": {
+     "description": "Number of successful operations",
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.OpenAirdropRequest": {
+   "required": [
+    "assetID",
+    "provider",
+    "gameID"
+   ],
+   "properties": {
+    "assetID": {
+     "type": "string"
+    },
+    "gameID": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain",
+      "Decepticons",
+      "ICS",
+      "AppendICS"
+     ]
+    }
+   }
+  },
+  "representation.Order": {
+   "required": [
+    "orderId",
+    "title",
+    "createdDate",
+    "updateDate",
+    "gameId",
+    "price",
+    "status",
+    "boughtFor",
+    "currency",
+    "imageUrl",
+    "slug",
+    "classID"
+   ],
+   "properties": {
+    "boughtFor": {
+     "type": "string"
+    },
+    "classID": {
+     "type": "string"
+    },
+    "createdDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "orderId": {
+     "type": "string"
+    },
+    "price": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string",
+     "enum": [
+      "active",
+      "completed"
+     ]
+    },
+    "title": {
+     "type": "string"
+    },
+    "updateDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.Partner": {
+   "required": [
+    "name",
+    "order",
+    "logo",
+    "description",
+    "website",
+    "visible"
+   ],
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "logo": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "order": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "visible": {
+     "type": "boolean"
+    },
+    "website": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Partners": {
+   "required": [
+    "partners"
+   ],
+   "properties": {
+    "partners": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Partner"
+     }
+    }
+   }
+  },
+  "representation.PaymentURL": {
+   "required": [
+    "url"
+   ],
+   "properties": {
+    "url": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.PeepRewardResponse": {
+   "required": [
+    "entities"
+   ],
+   "properties": {
+    "entities": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/representation.RewardEntity"
+     }
+    }
+   }
+  },
+  "representation.PostSellOfferAssetRequest": {
+   "required": [
+    "hash_id",
+    "amount",
+    "provider"
+   ],
+   "properties": {
+    "amount": {
+     "type": "integer"
+    },
+    "hash_id": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain",
+      "Decepticons",
+      "ICS",
+      "AppendICS"
+     ]
+    }
+   }
+  },
+  "representation.PostSellOfferRequest": {
+   "required": [
+    "assets",
+    "price",
+    "fee"
+   ],
+   "properties": {
+    "assets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.PostSellOfferAssetRequest"
+     }
+    },
+    "fee": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    }
+   }
+  },
+  "representation.Prices": {
+   "required": [
+    "DMC",
+    "USD"
+   ],
+   "properties": {
+    "DMC": {
+     "type": "string"
+    },
+    "USD": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.Promo": {
+   "required": [
+    "code"
+   ],
+   "properties": {
+    "code": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.RemoveAssetFromExportTradeRequest": {
+   "required": [
+    "assetId"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.RemoveAssetFromImportTradeRequest": {
+   "required": [
+    "assetId"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.RemoveOrderRequest": {
+   "required": [
+    "orderIds"
+   ],
+   "properties": {
+    "orderIds": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "representation.ResendEmailVerificationRequest": {
+   "required": [
+    "email"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ResetPasswordRequest": {
+   "required": [
+    "email"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "recapchaResponse": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.RewardEntity": {
+   "required": [
+    "title",
+    "image",
+    "count"
+   ],
+   "properties": {
+    "count": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "image": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SalesItemsFeedRequest": {
+   "required": [
+    "type",
+    "minPrice",
+    "gameID"
+   ],
+   "properties": {
+    "gameID": {
+     "type": "string"
+    },
+    "minPrice": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SalesItemsFeedRow": {
+   "required": [
+    "ID",
+    "Item_Title",
+    "Item_subtitle",
+    "Final_URL",
+    "Image_URL",
+    "Price",
+    "Item_description"
+   ],
+   "properties": {
+    "Final_URL": {
+     "type": "string"
+    },
+    "ID": {
+     "type": "string"
+    },
+    "Image_URL": {
+     "type": "string"
+    },
+    "Item_Title": {
+     "type": "string"
+    },
+    "Item_description": {
+     "type": "string"
+    },
+    "Item_subtitle": {
+     "type": "string"
+    },
+    "Price": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SalesItemsFeedTable": {
+   "required": [
+    "total",
+    "objects"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SalesItemsFeedRow"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.SearchItem": {
+   "required": [
+    "offerID",
+    "classID"
+   ],
+   "properties": {
+    "classID": {
+     "type": "string"
+    },
+    "offerID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SearchResponse": {
+   "required": [
+    "offerID"
+   ],
+   "properties": {
+    "offerID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SellOfferItemSticker": {
+   "required": [
+    "image",
+    "name"
+   ],
+   "properties": {
+    "image": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SellOffersAvgPriceItem": {
+   "required": [
+    "period",
+    "avg",
+    "classId",
+    "count"
+   ],
+   "properties": {
+    "avg": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "count": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "period": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.SellOffersAvgPriceResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SellOffersAvgPriceItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.SellOffersListItem": {
+   "required": [
+    "updated",
+    "closed",
+    "stickers",
+    "extensions",
+    "floatValue",
+    "quality",
+    "tradable",
+    "notTradableSeconds",
+    "gameId",
+    "nameColor",
+    "backgroundColor",
+    "slug",
+    "steamLinks",
+    "offerPrice",
+    "additionalInfo"
+   ],
+   "properties": {
+    "additionalInfo": {
+     "$ref": "#/definitions/representation.AdditionalInfo"
+    },
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "category": {
+     "type": "string"
+    },
+    "classID": {
+     "type": "string"
+    },
+    "closed": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "created": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "extensions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.OfferAssetExtension"
+     }
+    },
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "notTradableSeconds": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "offerPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "price": {
+     "type": "string"
+    },
+    "quality": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "steamLinks": {
+     "$ref": "#/definitions/representation.SteamLinks"
+    },
+    "stickers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SellOfferItemSticker"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "tradable": {
+     "type": "boolean"
+    },
+    "updated": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.SellOffersListResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SellOffersListItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.SellOffersRangePriceItem": {
+   "required": [
+    "period",
+    "count",
+    "minOfferPrice",
+    "maxOfferPrice",
+    "min",
+    "max"
+   ],
+   "properties": {
+    "count": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "max": {
+     "type": "string"
+    },
+    "maxOfferPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "min": {
+     "type": "string"
+    },
+    "minOfferPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "period": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.SellOffersRangePriceResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SellOffersRangePriceItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.SendPartnerCompanyRequest": {
+   "required": [
+    "locale",
+    "company_name",
+    "company_website",
+    "first_name",
+    "last_name",
+    "email",
+    "projects"
+   ],
+   "properties": {
+    "company_name": {
+     "type": "string"
+    },
+    "company_website": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    },
+    "first_name": {
+     "type": "string"
+    },
+    "last_name": {
+     "type": "string"
+    },
+    "locale": {
+     "type": "string"
+    },
+    "projects": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SignInRequest": {
+   "required": [
+    "email",
+    "password",
+    "fingerprint",
+    "verifyCode"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "fingerprint": {
+     "type": "string"
+    },
+    "password": {
+     "type": "string"
+    },
+    "recapchaResponse": {
+     "type": "string"
+    },
+    "verifyCode": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SignInResponse": {
+   "required": [
+    "token"
+   ],
+   "properties": {
+    "token": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SignUpRequest": {
+   "required": [
+    "email",
+    "password",
+    "username",
+    "fingerprint",
+    "agreementsConfirmed",
+    "isSubscribedToNewsletters",
+    "ref"
+   ],
+   "properties": {
+    "agreementsConfirmed": {
+     "type": "boolean"
+    },
+    "email": {
+     "type": "string"
+    },
+    "fingerprint": {
+     "type": "string"
+    },
+    "isSubscribedToNewsletters": {
+     "type": "boolean"
+    },
+    "password": {
+     "type": "string"
+    },
+    "ref": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
+    },
+    "utmMark": {
+     "$ref": "#/definitions/representation.UTMMark"
+    }
+   }
+  },
+  "representation.SignUpResponse": {
+   "required": [
+    "id"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamAccount": {
+   "required": [
+    "steamId",
+    "icon",
+    "tradeUrl",
+    "username",
+    "isProfilePrivate",
+    "level"
+   ],
+   "properties": {
+    "icon": {
+     "type": "string"
+    },
+    "isProfilePrivate": {
+     "type": "boolean"
+    },
+    "level": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "steamId": {
+     "type": "string"
+    },
+    "tradeUrl": {
+     "type": "string"
+    },
+    "username": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamAccountInfo": {
+   "required": [
+    "steamID",
+    "steamAccountAttached",
+    "emailVerified"
+   ],
+   "properties": {
+    "emailVerified": {
+     "type": "boolean"
+    },
+    "steamAccountAttached": {
+     "type": "boolean"
+    },
+    "steamID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamAccountInfoItem": {
+   "required": [
+    "info",
+    "processed"
+   ],
+   "properties": {
+    "info": {
+     "$ref": "#/definitions/representation.SteamAccountInfo"
+    },
+    "processed": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.SteamAccountInfoRequest": {
+   "required": [
+    "steamIDs"
+   ],
+   "properties": {
+    "steamIDs": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "representation.SteamAccountInfoResponse": {
+   "required": [
+    "objects"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SteamAccountInfoItem"
+     }
+    }
+   }
+  },
+  "representation.SteamItem": {
+   "required": [
+    "SteamAppID",
+    "SteamClassID",
+    "SteamInstanceID",
+    "SteamAssetID",
+    "SteamContextID"
+   ],
+   "properties": {
+    "SteamAppID": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "SteamAssetID": {
+     "type": "string"
+    },
+    "SteamClassID": {
+     "type": "string"
+    },
+    "SteamContextID": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "SteamInstanceID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamLinks": {
+   "required": [
+    "inspectInGame",
+    "viewInSteam"
+   ],
+   "properties": {
+    "inspectInGame": {
+     "type": "string"
+    },
+    "viewInSteam": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamLoginRequest": {
+   "required": [
+    "openid.mode",
+    "openid.op_endpoint",
+    "openid.claimed_id",
+    "openid.identity",
+    "openid.return_to",
+    "openid.response_nonce",
+    "openid.assoc_handle",
+    "openid.signed",
+    "openid.sig",
+    "ref"
+   ],
+   "properties": {
+    "openid.assoc_handle": {
+     "type": "string"
+    },
+    "openid.claimed_id": {
+     "type": "string"
+    },
+    "openid.identity": {
+     "type": "string"
+    },
+    "openid.mode": {
+     "type": "string"
+    },
+    "openid.op_endpoint": {
+     "type": "string"
+    },
+    "openid.response_nonce": {
+     "type": "string"
+    },
+    "openid.return_to": {
+     "type": "string"
+    },
+    "openid.sig": {
+     "type": "string"
+    },
+    "openid.signed": {
+     "type": "string"
+    },
+    "ref": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamLoginURLResponse": {
+   "required": [
+    "url"
+   ],
+   "properties": {
+    "url": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamTokenResponse": {
+   "required": [
+    "token",
+    "authType",
+    "isNewUser"
+   ],
+   "properties": {
+    "authType": {
+     "type": "string",
+     "enum": [
+      "steamRegistration",
+      "steamLogin"
+     ]
+    },
+    "isNewUser": {
+     "type": "boolean"
+    },
+    "token": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamUserInfoRequest": {
+   "required": [
+    "steamID"
+   ],
+   "properties": {
+    "steamID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.SteamUserInfoResponse": {
+   "required": [
+    "steamID",
+    "isProfilePrivate",
+    "name",
+    "avatar",
+    "avatar64",
+    "avatar184",
+    "alreadyRegistered",
+    "level"
+   ],
+   "properties": {
+    "alreadyRegistered": {
+     "type": "boolean"
+    },
+    "avatar": {
+     "type": "string"
+    },
+    "avatar184": {
+     "type": "string"
+    },
+    "avatar64": {
+     "type": "string"
+    },
+    "isProfilePrivate": {
+     "type": "boolean"
+    },
+    "level": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string"
+    },
+    "steamID": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ToGameRequest": {
+   "required": [
+    "assetId",
+    "classId",
+    "gameId",
+    "provider"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain",
+      "Decepticons",
+      "ICS",
+      "AppendICS"
+     ]
+    }
+   }
+  },
+  "representation.ToMarketRequest": {
+   "required": [
+    "assetId",
+    "classId",
+    "gameId",
+    "provider",
+    "price",
+    "fee"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "fee": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "price": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain",
+      "Decepticons",
+      "ICS",
+      "AppendICS"
+     ]
+    }
+   }
+  },
+  "representation.TradeError": {
+   "required": [
+    "code",
+    "created"
+   ],
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "created": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.TradeHookRequest": {
+   "required": [
+    "_organization",
+    "id",
+    "uuid",
+    "itemsToGive",
+    "steamTradeId",
+    "state",
+    "itemsToReceive",
+    "changes",
+    "partner",
+    "_bot",
+    "responses",
+    "TradeType",
+    "lastError",
+    "apiKey",
+    "_application",
+    "token",
+    "message",
+    "steamErrors"
+   ],
+   "properties": {
+    "TradeType": {
+     "type": "string"
+    },
+    "_application": {
+     "type": "string"
+    },
+    "_bot": {
+     "type": "string"
+    },
+    "_organization": {
+     "type": "string"
+    },
+    "apiKey": {
+     "type": "string"
+    },
+    "changes": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/autobots_model.TradeChange"
+     }
+    },
+    "id": {
+     "type": "string"
+    },
+    "itemsToGive": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/autobots_model.TradeItem"
+     }
+    },
+    "itemsToReceive": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/autobots_model.TradeItem"
+     }
+    },
+    "lastError": {
+     "$ref": "#/definitions/autobots_model.TradeLastError"
+    },
+    "message": {
+     "type": "string"
+    },
+    "partner": {
+     "type": "string"
+    },
+    "responses": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/autobots_model.TradeResponse"
+     }
+    },
+    "state": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "steamErrors": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/autobots_model.TradeSteamError"
+     }
+    },
+    "steamTradeId": {
+     "type": "string"
+    },
+    "token": {
+     "type": "string"
+    },
+    "uuid": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.TradeResponse": {
+   "required": [
+    "assets",
+    "hash",
+    "state",
+    "errors"
+   ],
+   "properties": {
+    "assets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.Asset"
+     }
+    },
+    "errors": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.TradeError"
+     }
+    },
+    "hash": {
+     "type": "string"
+    },
+    "started": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "state": {
+     "type": "string",
+     "enum": [
+      "Created",
+      "WaitingForCreationTrade",
+      "WaitingForAcceptance",
+      "Accepted",
+      "Failed",
+      "Error",
+      "Closed"
+     ]
+    },
+    "steamTradeId": {
+     "type": "string"
+    },
+    "timer": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.TradeURLRequest": {
+   "required": [
+    "tradeUrl"
+   ],
+   "properties": {
+    "tradeUrl": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.TradingApiTokenResponse": {
+   "required": [
+    "token"
+   ],
+   "properties": {
+    "token": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.TradingGetOrdersResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.TradingOrder"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.TradingInventoryItem": {
+   "required": [
+    "assetId",
+    "classId",
+    "title",
+    "description",
+    "imageUrl",
+    "gameId",
+    "gameType",
+    "status",
+    "offerId",
+    "provider",
+    "stickers",
+    "extensions",
+    "floatValue",
+    "quality",
+    "tradable",
+    "backgroundColor",
+    "nameColor",
+    "slug"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "extensions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryAssetExtension"
+     }
+    },
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "notTradableSeconds": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "provider": {
+     "type": "string",
+     "enum": [
+      "Steam",
+      "Autobots",
+      "Blockchain"
+     ]
+    },
+    "quality": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string",
+     "enum": [
+      "Default",
+      "OnSale",
+      "OnExchange",
+      "InTrade",
+      "Frozen"
+     ]
+    },
+    "stickers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryItemSticker"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "tradable": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.TradingMoney": {
+   "required": [
+    "Amount",
+    "Currency"
+   ],
+   "properties": {
+    "Amount": {
+     "description": "TradingMoney amount in cents",
+     "type": "string"
+    },
+    "Currency": {
+     "type": "string",
+     "enum": [
+      "USD"
+     ]
+    }
+   }
+  },
+  "representation.TradingOrder": {
+   "required": [
+    "OrderID",
+    "Title",
+    "CreatedDate",
+    "UpdatedDate",
+    "GameID",
+    "Price",
+    "Status",
+    "BoughtFor",
+    "Currency",
+    "ImageURL",
+    "Slug"
+   ],
+   "properties": {
+    "BoughtFor": {
+     "description": "Sold price",
+     "type": "string"
+    },
+    "CreatedDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "Currency": {
+     "type": "string",
+     "enum": [
+      "USD",
+      "DMC"
+     ]
+    },
+    "GameID": {
+     "description": "Unique game ID on Dmarket",
+     "type": "string"
+    },
+    "ImageURL": {
+     "type": "string"
+    },
+    "OrderID": {
+     "description": "Unique order ID",
+     "type": "string"
+    },
+    "Price": {
+     "description": "Price of this purchase order",
+     "type": "string"
+    },
+    "Slug": {
+     "description": "Slug name of item",
+     "type": "string"
+    },
+    "Status": {
+     "type": "string",
+     "enum": [
+      "Active",
+      "Completed"
+     ]
+    },
+    "Title": {
+     "description": "Item title",
+     "type": "string"
+    },
+    "UpdatedDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.TransferAssetsRequest": {
+   "required": [
+    "assets"
+   ],
+   "properties": {
+    "assets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.AssetToTransfer"
+     }
+    }
+   }
+  },
+  "representation.TransferAssetsResponse": {
+   "required": [
+    "objects"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.TransferredAsset"
+     }
+    }
+   }
+  },
+  "representation.TransferredAsset": {
+   "required": [
+    "id",
+    "processed"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "processed": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UTMMark": {
+   "required": [
+    "referrer",
+    "page"
+   ],
+   "properties": {
+    "campaign": {
+     "type": "string"
+    },
+    "medium": {
+     "type": "string"
+    },
+    "page": {
+     "type": "string"
+    },
+    "referrer": {
+     "type": "string"
+    },
+    "source": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UTMMarkAddRequest": {
+   "required": [
+    "eventType",
+    "referrer",
+    "page"
+   ],
+   "properties": {
+    "campaign": {
+     "type": "string"
+    },
+    "eventType": {
+     "type": "string",
+     "enum": [
+      "registration",
+      "login",
+      "partnersForm"
+     ]
+    },
+    "medium": {
+     "type": "string"
+    },
+    "page": {
+     "type": "string"
+    },
+    "referrer": {
+     "type": "string"
+    },
+    "source": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UTMMarkAddResponse": {
+   "required": [
+    "id"
+   ],
+   "properties": {
+    "id": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UpdateEmailRequest": {
+   "required": [
+    "email",
+    "isSubscribedToNewsletters"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "isSubscribedToNewsletters": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UpdateEmailResponse": {
+   "required": [
+    "success"
+   ],
+   "properties": {
+    "success": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UpdateOfferTrading": {
+   "required": [
+    "OfferID",
+    "Price"
+   ],
+   "properties": {
+    "OfferID": {
+     "description": "Unique offer ID",
+     "type": "string"
+    },
+    "Price": {
+     "description": "New price for offer",
+     "$ref": "#/definitions/representation.TradingMoney"
+    }
+   }
+  },
+  "representation.UpdateOffersTradingRequest": {
+   "required": [
+    "Items"
+   ],
+   "properties": {
+    "Items": {
+     "description": "List of offers to update",
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UpdateOfferTrading"
+     }
+    }
+   }
+  },
+  "representation.UpdatePasswordRequest": {
+   "required": [
+    "newPassword",
+    "token"
+   ],
+   "properties": {
+    "newPassword": {
+     "type": "string"
+    },
+    "token": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UpdateTimeZoneOffsetRequest": {
+   "required": [
+    "offset"
+   ],
+   "properties": {
+    "offset": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.UpdateTimeZoneOffsetResponse": {
+   "required": [
+    "success"
+   ],
+   "properties": {
+    "success": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UpdateUsernameRequest": {
+   "required": [
+    "username"
+   ],
+   "properties": {
+    "username": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UsePromoCodeResponse": {
+   "required": [
+    "success",
+    "game",
+    "items"
+   ],
+   "properties": {
+    "game": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "success": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UserAccountResponse": {
+   "required": [
+    "id",
+    "publicKey",
+    "username",
+    "email",
+    "isEmailVerified",
+    "isPasswordSet",
+    "imageUrl",
+    "level",
+    "countryCodeFromIP",
+    "settings",
+    "steamAccount",
+    "agreementsInfo",
+    "regType"
+   ],
+   "properties": {
+    "agreementsInfo": {
+     "$ref": "#/definitions/representation.AgreementsInfo"
+    },
+    "countryCodeFromIP": {
+     "type": "string"
+    },
+    "email": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "isEmailVerified": {
+     "type": "boolean"
+    },
+    "isPasswordSet": {
+     "type": "boolean"
+    },
+    "level": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "publicKey": {
+     "type": "string"
+    },
+    "regType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "user"
+     ]
+    },
+    "settings": {
+     "$ref": "#/definitions/representation.UserAccountSettingsResponse"
+    },
+    "steamAccount": {
+     "$ref": "#/definitions/representation.SteamAccount"
+    },
+    "username": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserAccountSettingsResponse": {
+   "required": [
+    "enabledDeviceConfirmation",
+    "tradingApiToken",
+    "isSubscribedToNewsletters"
+   ],
+   "properties": {
+    "enabledDeviceConfirmation": {
+     "type": "boolean"
+    },
+    "isSubscribedToNewsletters": {
+     "type": "boolean"
+    },
+    "tradingApiToken": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserBalance": {
+   "required": [
+    "dmc",
+    "usd",
+    "dmcAvailableToWithdraw",
+    "usdAvailableToWithdraw"
+   ],
+   "properties": {
+    "dmc": {
+     "type": "string"
+    },
+    "dmcAvailableToWithdraw": {
+     "type": "string"
+    },
+    "usd": {
+     "type": "string"
+    },
+    "usdAvailableToWithdraw": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserExchangeOffersAssetsResponse": {
+   "required": [
+    "assetId",
+    "title",
+    "gameId",
+    "gameName",
+    "imageUrl"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserExchangeOffersListItem": {
+   "required": [
+    "offerId",
+    "senderAssetsCount",
+    "recipientAssetsCount",
+    "addedDate",
+    "updatedDate",
+    "state",
+    "sender",
+    "senderUsername",
+    "recipient",
+    "recipientUsername",
+    "senderAssets",
+    "recipientAssets",
+    "fixedConditions",
+    "feeStrategy",
+    "nameColor",
+    "backgroundColor"
+   ],
+   "properties": {
+    "addedDate": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "feeStrategy": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "fixedConditions": {
+     "type": "boolean"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "recipient": {
+     "type": "string"
+    },
+    "recipientAssets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserExchangeOffersAssetsResponse"
+     }
+    },
+    "recipientAssetsCount": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "recipientUsername": {
+     "type": "string"
+    },
+    "sender": {
+     "type": "string"
+    },
+    "senderAssets": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserExchangeOffersAssetsResponse"
+     }
+    },
+    "senderAssetsCount": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "senderUsername": {
+     "type": "string"
+    },
+    "state": {
+     "type": "string"
+    },
+    "updatedDate": {
+     "type": "integer",
+     "format": "int64"
+    }
+   }
+  },
+  "representation.UserExchangeOffersListResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserExchangeOffersListItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.UserGameResponse": {
+   "required": [
+    "id",
+    "name",
+    "logoUrl",
+    "gameType",
+    "itemsCount",
+    "authMethods"
+   ],
+   "properties": {
+    "authMethods": {
+     "type": "array",
+     "enum": [
+      "steam"
+     ],
+     "items": {
+      "type": "string",
+      "enum": [
+       "steam"
+      ]
+     }
+    },
+    "gameType": {
+     "type": "string",
+     "enum": [
+      "steam",
+      "blockchain"
+     ]
+    },
+    "id": {
+     "type": "string"
+    },
+    "itemsCount": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "logoUrl": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserGamesResponse": {
+   "required": [
+    "objects"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserGameResponse"
+     }
+    }
+   }
+  },
+  "representation.UserGeoInfo": {
+   "required": [
+    "countryCodeFromIP"
+   ],
+   "properties": {
+    "countryCodeFromIP": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserInventoryResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.UserPurchaseOffersListItem": {
+   "required": [
+    "offerId",
+    "assetId",
+    "classId",
+    "title",
+    "imageUrl",
+    "price",
+    "status",
+    "created",
+    "closed",
+    "gameId",
+    "gameName",
+    "nameColor",
+    "backgroundColor"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "closed": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "created": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "price": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.UserPurchaseOffersListResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserPurchaseOffersListItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.UserSellOffersListItem": {
+   "required": [
+    "stickers",
+    "extensions",
+    "floatValue",
+    "quality",
+    "tradable",
+    "dmcCurrencyRate",
+    "currencyRate",
+    "notTradableSeconds",
+    "nameColor",
+    "backgroundColor",
+    "slug",
+    "steamLinks",
+    "fee",
+    "offerPrice"
+   ],
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "backgroundColor": {
+     "type": "string"
+    },
+    "classId": {
+     "type": "string"
+    },
+    "closed": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "created": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "currencyRate": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.CurrencyRate"
+     }
+    },
+    "dmcCurrencyRate": {
+     "type": "number",
+     "format": "double"
+    },
+    "extensions": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.OfferAssetExtension"
+     }
+    },
+    "fee": {
+     "$ref": "#/definitions/representation.Fee"
+    },
+    "floatValue": {
+     "type": "number",
+     "format": "double"
+    },
+    "gameId": {
+     "type": "string"
+    },
+    "gameName": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "nameColor": {
+     "type": "string"
+    },
+    "notTradableSeconds": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "offerId": {
+     "type": "string"
+    },
+    "offerPrice": {
+     "$ref": "#/definitions/representation.Money"
+    },
+    "price": {
+     "type": "string"
+    },
+    "prices": {
+     "$ref": "#/definitions/representation.Prices"
+    },
+    "quality": {
+     "type": "string"
+    },
+    "slug": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "steamLinks": {
+     "$ref": "#/definitions/representation.SteamLinks"
+    },
+    "stickers": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.SellOfferItemSticker"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "tradable": {
+     "type": "boolean"
+    }
+   }
+  },
+  "representation.UserSellOffersListResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.UserSellOffersListItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.ValuableItem": {
+   "required": [
+    "title",
+    "gameId",
+    "priceDMC",
+    "itemImage"
+   ],
+   "properties": {
+    "gameId": {
+     "type": "string"
+    },
+    "itemImage": {
+     "type": "string"
+    },
+    "priceDMC": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.ValuableItems": {
+   "required": [
+    "list",
+    "valuableItemsTotal"
+   ],
+   "properties": {
+    "list": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.ValuableItem"
+     }
+    },
+    "valuableItemsTotal": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "representation.VerificationEmailRequest": {
+   "required": [
+    "email"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.VerificationHashRequest": {
+   "required": [
+    "hash"
+   ],
+   "properties": {
+    "hash": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.VerificationHashResponse": {
+   "required": [
+    "isVerify",
+    "email",
+    "token"
+   ],
+   "properties": {
+    "email": {
+     "type": "string"
+    },
+    "isVerify": {
+     "type": "boolean"
+    },
+    "token": {
+     "type": "string"
+    }
+   }
+  },
+  "representation.WidgetLimitsResponse": {
+   "required": [
+    "currency"
+   ],
+   "properties": {
+    "currency": {
+     "type": "object",
+     "enum": [
+      "USD,DMC"
+     ],
+     "additionalProperties": {
+      "$ref": "#/definitions/representation.CurrencyLimit"
+     }
+    }
+   }
+  },
+  "representation.WithdrawResponse": {
+   "required": [
+    "objects",
+    "total"
+   ],
+   "properties": {
+    "objects": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/representation.InventoryItem"
+     }
+    },
+    "total": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  }
+ },
+ "tags": [
+  {
+   "description": "Managing users",
+   "name": "users"
+  }
+ ]
+}
