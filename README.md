@@ -1,5 +1,2 @@
-# DMarekt API documentation
-
-<swagger>swagger.json</swagger>
-
+# DMarket API documentation
 
