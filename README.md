@@ -1,7 +1,3 @@
-# DMarket API
-
-<swagger>swagger.json</swagger>
-
 # Dmarket trading
 
 Resource for managing tradings
